@@ -1,8 +1,16 @@
-<%= link_to book_path(book), target: "_top" do  %>
+<div>
+  <%= link_to book_path(book), target: "_top" do  %>
+    <div class="card">
+      <h2><%= book.title %></h2>
+      <p><%= book.display_authors if book.authors.any? %></p>
+      <p><%= book.summary %></p>
+      <p><%= "#{book.first_publish_year}, #{book.pages} pages" %></p>
+
+    </div>
+  <% end %>
   <div class="card">
-    <h2><%= book.title %></h2>
-    <p><%= book.display_authors if book.authors.any? %></p>
-    <p><%= book.summary %></p>
-    <p><%= "#{book.first_publish_year}, #{book.pages} pages" %></p>
+    <%= form_with url: readings_path, method: :post do |form| %>
+      <%= form.select :status,  Reading.statuses.keys.map { |s| [s.humanize, s] }, prompt: "Select status" %>
+    <% end %>
   </div>
-<% end %>
+</div>

@@ -16,6 +16,7 @@ class Book < ApplicationRecord
                   using: {
                     tsearch: { prefix: true }
                   }
+
   def display_authors
     authors.map(&:full_name).join(", ")
   end
