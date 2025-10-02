@@ -1,0 +1,33 @@
+<div>
+  <% if alert = flash[:alert] %>
+    <p id="alert"><%= alert %></p>
+  <% end %>
+
+  <% if notice = flash[:notice] %>
+    <p><%= notice %></p>
+  <% end %>
+
+  <%= form_with model: @user, url: registration_url do |form| %>
+    <div>
+      <%= form.email_field :email_address, required: true, autofocus: true, autocomplete: "username", placeholder: "Enter your email address", value: params[:email_address], class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div>
+      <%= form.password_field :password, required: true, autocomplete: "current-password", placeholder: "Enter your password", maxlength: 72, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div>
+      <%= form.password_field :password_confirmation, required: true, autocomplete: "current-password", placeholder: "Confirm your password", maxlength: 72, class: "block shadow rounded-md border border-gray-400 outline-none px-3 py-2 mt-2 w-full" %>
+    </div>
+
+    <div>
+      <div>
+        <%= form.submit "Sign up" %>
+      </div>
+
+      <div>
+        <%= link_to "Forgot password?", new_password_path %>
+      </div>
+    </div>
+  <% end %>
+</div>

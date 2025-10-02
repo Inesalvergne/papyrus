@@ -1,4 +1,6 @@
 class BooksController < ApplicationController
+  allow_unauthenticated_access only: %i[ index ]
+
   def index
     @books = Book.all
     @books = @books.search_by_title_and_authors(params[:query]) if params[:query].present?
