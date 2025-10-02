@@ -1,0 +1,18 @@
+<div class="hero-container">
+  <h1>Papyrus</h1>
+  <p>Search for a book and add it to your own library</p>
+  <div class="search-form-container">
+    <%= form_with url: books_path,
+                  method: :get,
+                  data: {turbo_frame: :books} do |form| %>
+      <%= form.search_field :query %>
+    <% end %>
+  </div>
+</div>
+
+
+<%= turbo_frame_tag :books do %>
+  <div class="books-grid">
+    <%= render @books %>
+  </div>
+<% end %>
