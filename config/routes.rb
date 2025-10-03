@@ -17,4 +17,5 @@ Rails.application.routes.draw do
   root "books#index"
   resources :books, only: %i[ index show ]
   resource :registration, only: %i[ new create ]
+  resources :readings, only: %i[ create update destroy ]
 end

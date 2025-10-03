@@ -1,6 +1,9 @@
 class User < ApplicationRecord
   has_secure_password
+
   has_many :sessions, dependent: :destroy
+  has_many :readings, dependent: :destroy
+  has_many :books, through: :readings
 
   validates :email_address, presence: true
   validates :password, length: { minimum: 6 }, if: -> { new_record? || changes[:password_digest] }
@@ -8,4 +11,8 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:password_digest] }
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+
+  def book_status(book)
+    readings.find_by(book: book)&.status || nil
+  end
 end
