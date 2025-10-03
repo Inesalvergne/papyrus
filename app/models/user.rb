@@ -11,4 +11,8 @@ class User < ApplicationRecord
   validates :password_confirmation, presence: true, if: -> { new_record? || changes[:password_digest] }
 
   normalizes :email_address, with: ->(e) { e.strip.downcase }
+
+  def book_status(book)
+    readings.find_by(book: book)&.status || nil
+  end
 end

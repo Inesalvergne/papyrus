@@ -1,0 +1,13 @@
+<div class="bottom-section">
+  <% if Current.user.book_status(book) %>
+    <p><%= Current.user.book_status(book) %></p>
+  <% else %>
+    <%= form_with model: Reading.new, url: readings_path, method: :post do |form| %>
+      <%= form.hidden_field :book_id, value: book.id %>
+      <%= form.select :status,
+                      Reading.statuses.keys.map { |s| [s.humanize, s] },
+                      { prompt: "Select status" },
+                      data: { controller: "autosubmit", action: "change->autosubmit#submit" } %>
+    <% end %>
+  <% end %>
+</div>

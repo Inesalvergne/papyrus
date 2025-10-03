@@ -1,6 +1,6 @@
-<div>
+<div class="card">
   <%= link_to book_path(book), target: "_top" do  %>
-    <div class="card">
+    <div class="top-section">
       <h2><%= book.title %></h2>
       <p><%= book.display_authors if book.authors.any? %></p>
       <p><%= book.summary %></p>
@@ -8,9 +8,20 @@
 
     </div>
   <% end %>
-  <div class="card">
-    <%= form_with url: readings_path, method: :post do |form| %>
-      <%= form.select :status,  Reading.statuses.keys.map { |s| [s.humanize, s] }, prompt: "Select status" %>
-    <% end %>
-  </div>
+
+  <%= turbo_frame_tag dom_id(book, :status) do %>
+    <div class="bottom-section">
+      <% if Current.user.book_status(book) %>
+        <p><%= Current.user.book_status(book) %></p>
+      <% else %>
+        <%= form_with model: book.readings, url: readings_path, method: :post do |form| %>
+          <%= form.hidden_field :book_id, value: book.id %>
+          <%= form.select :status,
+                          Reading.statuses.keys.map { |s| [s.humanize, s] },
+                          { prompt: "Select status" },
+                          data: { controller: "autosubmit", action: "change->autosubmit#submit" } %>
+        <% end %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
