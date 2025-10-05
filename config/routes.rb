@@ -15,7 +15,13 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   root "books#index"
-  resources :books, only: %i[ index show ]
+
+  resources :books, only: %i[ index show ] do
+    scope module: :books do
+      resource :title, only: %i[ edit update ]
+    end
+  end
+
   resource :registration, only: %i[ new create ]
   resources :readings, only: %i[ create update destroy ]
 end

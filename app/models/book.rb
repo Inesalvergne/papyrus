@@ -18,6 +18,6 @@ class Book < ApplicationRecord
                   }
 
   def display_authors
-    authors.map(&:full_name).join(", ")
+    authors.map(&:full_name).join(", ") || "Unknown Author"
   end
 end
