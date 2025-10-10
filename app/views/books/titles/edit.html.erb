@@ -1,0 +1,6 @@
+<%= turbo_frame_tag @book, :edit_title do %>
+  <%= form_with model: @book, url: book_title_path(@book) do |form| %>
+    <%= form.text_field :title, autofocus: true, required: true %>
+    <%= form.submit %>
+  <% end %>
+<% end %>
